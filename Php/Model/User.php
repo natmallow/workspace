@@ -31,7 +31,14 @@ class User {
         $stmt = $this->conn()->prepare('SELECT * FROM ' . $this->table);
         $stmt->execute($sql);
         $result = $stmt->get_result();
-        return $result;
+        $numRows = $result->num_rows;
+        if($numRows > 0){
+            while ($row = $result->fetch_assoc()){
+                $data[] = $row;
+            }
+            return $data;
+        }
+       
     }
 
     public function getUser($id) {
